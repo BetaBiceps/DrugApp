@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class Home extends AppCompatActivity {
 
@@ -15,6 +17,10 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        final TextView titleTextView = (TextView) findViewById(R.id.textView);
+
+        //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -26,6 +32,26 @@ public class Home extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //Calendar Button
+        Button calendarButton = (Button) findViewById(R.id.calendarButton);
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                titleTextView.setText("Calendar");
+            }
+        });
+
+        //Overview Button
+        Button overviewButton = (Button) findViewById(R.id.overviewButton);
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                titleTextView.setText("Overview");
+            }
+        });
+
+
     }
 
     @Override
