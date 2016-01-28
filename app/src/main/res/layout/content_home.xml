@@ -27,7 +27,8 @@
         android:id="@+id/calendarButton"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp" />
+        android:layout_marginTop="150dp"
+        android:onClick="calendarClick"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,5 +36,6 @@
         android:id="@+id/overviewButton"
         android:layout_below="@+id/calendarButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        android:onClick="overviewClick"/>
 </RelativeLayout>

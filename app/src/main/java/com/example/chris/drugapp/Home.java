@@ -1,5 +1,6 @@
 package com.example.chris.drugapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,7 +12,11 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class Home extends AppCompatActivity {
+
+    private Button calendarButton, overviewButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,37 +24,10 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         final TextView titleTextView = (TextView) findViewById(R.id.textView);
-
-        //Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         //Calendar Button
-        Button calendarButton = (Button) findViewById(R.id.calendarButton);
-        calendarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                titleTextView.setText("Calendar");
-            }
-        });
-
+        calendarButton = (Button) findViewById(R.id.calendarButton);
         //Overview Button
-        Button overviewButton = (Button) findViewById(R.id.overviewButton);
-        calendarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                titleTextView.setText("Overview");
-            }
-        });
+        overviewButton = (Button) findViewById(R.id.overviewButton);
 
 
     }
@@ -74,5 +52,19 @@ public class Home extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void calendarClick(View view) {
+        Intent calendarIntent = new Intent(this,
+                CalendarPage.class);
+
+        startActivity(calendarIntent);
+    }
+
+    public void overviewClick(View view) {
+        Intent overviewIntent = new Intent(this,
+                Overview.class);
+
+        startActivity(overviewIntent);
     }
 }
