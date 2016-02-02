@@ -1,27 +1,53 @@
 package com.example.chris.drugapp;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.widget.CalendarView;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
+import android.view.View;
+
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
+
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * Created by Chris on 27/01/2016.
  */
-public class CalendarPage extends Activity {
+public class CalendarPage extends FragmentActivity {
 
-    CalendarView calendarView;
+    CaldroidFragment caldroidFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
 
-        calendarView = (CalendarView) findViewById(R.id.calendar);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth){
-                Toast.makeText(getApplicationContext(), dayOfMonth + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
-            }
-        });
+
+        caldroidFragment = new CaldroidFragment();
+        Bundle args = new Bundle();
+        Calendar cal = Calendar.getInstance();
+        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+
+        caldroidFragment.setArguments(args);
+        caldroidFragment.setCaldroidListener(listener);
+
+        android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.cal, caldroidFragment);
+        t.commit();
+
+
     }
+
+    final CaldroidListener listener = new CaldroidListener() {
+
+        @Override
+        public void onSelectDate(Date date, View view) {
+            caldroidFragment.setBackgroundResourceForDate(R.color.blue, date);
+            caldroidFragment.refreshView();
+        }
+    };
+
+
 }
