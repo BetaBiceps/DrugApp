@@ -15,9 +15,22 @@
 
     <LinearLayout android:id="@+id/cal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_below="@+id/calendarTitle">
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/event_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/cal"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#CCCCCC"
+        android:dividerHeight="1dp"
+        android:paddingLeft="2dp" >
+    </ListView>
 
 </LinearLayout>
