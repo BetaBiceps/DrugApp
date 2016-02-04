@@ -4,27 +4,23 @@ package com.example.chris.drugapp;
  * Created by Chris on 01/02/2016.
  */
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class Events {
 
-    HashMap<Date, Event> events = new HashMap<Date, Event>();
+    ArrayList<Event> events = new ArrayList<Event>();
 
     // Getting Cursor to read data from table
     public ArrayList<Event> readData(Date event_date) {
         ArrayList<Event> dayEvents = new ArrayList<Event>();
 
-        for (Map.Entry<Date, Event> entry : events.entrySet()) {
-            Date d = entry.getKey();
-            Event e = entry.getValue();
+        for (Event entry : events) {
+            Date d = entry.getDate();
 
             if(d.compareTo(event_date) == 0){
-                dayEvents.add(e);
+                dayEvents.add(entry);
             }
         }
         return dayEvents;
@@ -35,9 +31,8 @@ public class Events {
     public ArrayList<Event> readAllEvents() {
         ArrayList<Event> list = new ArrayList<Event>();
 
-        for (Map.Entry<Date, Event> entry : events.entrySet()) {
-            Event e = entry.getValue();
-            list.add(e);
+        for (Event entry : events) {
+            list.add(entry);
         }
         return list;
     }
@@ -47,7 +42,7 @@ public class Events {
         Event e = new Event(date, time, msg);
 
         try {
-            events.put(date, e);
+            events.add(e);
         } catch (Exception ex){
             ex.printStackTrace();
             return -1;

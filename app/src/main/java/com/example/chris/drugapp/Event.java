@@ -10,7 +10,7 @@ public class Event {
     public String time;
     public String msg;
     public Date date;
-    SimpleDateFormat format;
+    SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
 
     public Event(Date date, String time, String msg){
         this.time = time;
@@ -25,6 +25,12 @@ public class Event {
         return this.date;
     }
     public String dateTostring(){
-        return format.format(date);
+        String x = null;
+        try {
+            x = format.format(date);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return x;
     }
 }
