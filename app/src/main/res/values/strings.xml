@@ -5,4 +5,5 @@
     <string name="overview_button">Overview</string>
     <string name="calendarTitle">Calendar</string>
     <string name="overviewTitle">Overview</string>
+    <string name="currentTimeText">--:--:--</string>
 </resources>

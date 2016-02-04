@@ -37,7 +37,7 @@ public class CalendarPage extends FragmentActivity {
     private CaldroidFragment caldroidFragment ;
     private Bundle args;
     private ArrayList<Event> cursor;
-    private ArrayAdapter<Event> myadapter = null;
+    private EventAdapter myadapter = null;
     private ListView listView;
     private TextView output;
     private EditText event;
@@ -92,13 +92,10 @@ public class CalendarPage extends FragmentActivity {
 
             @Override
             public void onSelectDate(Date date, View view) {
-                myadapter = new ArrayAdapter<Event>(CalendarPage.this, R.layout.event_list);
-                listView.setAdapter(myadapter);
-
                 cursor = events.readData(date);
-                for(Event e : cursor){
-                    myadapter.add(e);
-                }
+
+                myadapter = new EventAdapter(CalendarPage.this,0, cursor);
+                listView.setAdapter(myadapter);
 
                 caldroidFragment.refreshView();
             }
@@ -111,8 +108,7 @@ public class CalendarPage extends FragmentActivity {
 
                 Calendar cal=Calendar.getInstance();
                 cal.setTime(date);
-                caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_darker_gray, date);
-                openEventDialogue(cal,date);
+                openEventDialogue(cal, date);
                 caldroidFragment.refreshView();
             }
 
@@ -125,7 +121,6 @@ public class CalendarPage extends FragmentActivity {
                         Date date = e.getDate();
                         caldroidFragment.setBackgroundResourceForDate(R.drawable.red_border, date);
                     }
-
                 }
             }
 
@@ -146,8 +141,10 @@ public class CalendarPage extends FragmentActivity {
       int rowid = events.insertData(convertedDate,time, msg);
       if ( rowid == -1)
       {
-          caldroidFragment.setBackgroundResourceForDate(R.color.white, convertedDate);
+          caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_white, convertedDate);
           Toast.makeText(getBaseContext(), "Event not stored", Toast.LENGTH_SHORT).show();
+          return;
+
       }
       caldroidFragment.setBackgroundResourceForDate(R.drawable.red_border, convertedDate);
       caldroidFragment.refreshView();
@@ -165,13 +162,12 @@ public class CalendarPage extends FragmentActivity {
         btnClick = (Button) dialogView.findViewById(R.id.set_button);
 
         btnClick.setOnClickListener(new OnClickListener() {
-
             public void onClick(View v) {
-
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
+
                 mTimePicker = new TimePickerDialog(CalendarPage.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
@@ -180,12 +176,10 @@ public class CalendarPage extends FragmentActivity {
                         calendar.set(Calendar.MINUTE, selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
+
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
-
-
             }
-
         });
 
         dialogBuilder.setPositiveButton("Event", new DialogInterface.OnClickListener()
@@ -205,7 +199,7 @@ public class CalendarPage extends FragmentActivity {
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                caldroidFragment.setBackgroundResourceForDate(R.color.white, date);
+                caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_white, date);
                 caldroidFragment.refreshView();
             }
         });

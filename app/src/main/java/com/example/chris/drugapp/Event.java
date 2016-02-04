@@ -10,7 +10,7 @@ public class Event {
     public String msg;
     public Date date;
 
-    public Event(String time, String msg, Date date){
+    public Event(Date date, String time, String msg){
         this.time = time;
         this.msg = msg;
         this.date = date;

@@ -43,14 +43,14 @@ public class Events {
 
     // Inserting Data into table
     public int insertData(Date date, String time, String msg) {
-        Event e = new Event(time,msg, date);
+        Event e = new Event(date, time, msg);
 
-        if(events.put(date,e) != null){
-            return 1;
+        try {
+            events.put(date, e);
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return -1;
         }
-        return -1;
+        return 1;
     }
-
-
-
 }
