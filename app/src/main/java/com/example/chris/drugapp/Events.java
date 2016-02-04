@@ -4,6 +4,7 @@ package com.example.chris.drugapp;
  * Created by Chris on 01/02/2016.
  */
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Events {
             Date d = entry.getKey();
             Event e = entry.getValue();
 
-            if(d == event_date){
+            if(d.compareTo(event_date) == 0){
                 dayEvents.add(e);
             }
         }

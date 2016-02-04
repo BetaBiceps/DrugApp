@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 
@@ -47,27 +45,11 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         Event item = getItem(position);
         if(item != null){
-            viewHolder.itemView1.setText(String.format("%s", item.date));
+            viewHolder.itemView1.setText(item.dateTostring());
             viewHolder.itemView2.setText(String.format("%s", item.time));
             viewHolder.itemView3.setText(String.format("%s", item.msg));
         }
-/*        LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        View view = inflater.inflate(R.layout.event_item,
-                parent, false);
-
-        String date = (String) getItem(position);
-        TextView txtView = (TextView) view.findViewById(R.id.txt_eventDate);
-        txtView.setText(date);
-
-        String time = (String) getItem(position);
-        txtView = (TextView) view.findViewById(R.id.txt_eventTime);
-        txtView.setText(time);
-
-        String msg = (String) getItem(position);
-        txtView = (TextView) view.findViewById(R.id.txt_eventName);
-        txtView.setText(msg);
-*/
         return convertView;
     }
 

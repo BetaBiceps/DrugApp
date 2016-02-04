@@ -1,5 +1,6 @@
 package com.example.chris.drugapp;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -9,6 +10,7 @@ public class Event {
     public String time;
     public String msg;
     public Date date;
+    SimpleDateFormat format;
 
     public Event(Date date, String time, String msg){
         this.time = time;
@@ -21,5 +23,8 @@ public class Event {
     }
     public Date getDate(){
         return this.date;
+    }
+    public String dateTostring(){
+        return format.format(date);
     }
 }
