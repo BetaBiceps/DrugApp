@@ -1,22 +1,19 @@
 package com.example.chris.drugapp;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Map;
+
 
 /**
  * Created by Chris on 22/02/2016.
  */
-public class OverviewAdapter extends ArrayAdapter<HashMap<String,Integer>>{
+public class OverviewAdapter extends BaseAdapter{
 
     private static class ViewHolder{
         private TextView itemView1;
@@ -24,14 +21,34 @@ public class OverviewAdapter extends ArrayAdapter<HashMap<String,Integer>>{
     }
     ViewHolder viewHolder;
 
-    public OverviewAdapter(Context context, HashMap<String,Integer> values) {
-        super(context, R.layout.overview_row_layout);
+    private final ArrayList mData;
+
+    public OverviewAdapter(Map<String, String> map) {
+        mData = new ArrayList();
+        mData.addAll(map.entrySet());
     }
+
+    @Override
+    public int getCount() {
+        return mData.size();
+    }
+
+    @Override
+    public Map.Entry<String, String> getItem(int position) {
+        return (Map.Entry) mData.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // TODO implement you own logic with ID
+        return 0;
+    }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
-            convertView = LayoutInflater.from(this.getContext())
+            convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.overview_row_layout,parent,false);
 
             viewHolder = new ViewHolder();
@@ -43,17 +60,12 @@ public class OverviewAdapter extends ArrayAdapter<HashMap<String,Integer>>{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        HashMap<String, Integer> item = new HashMap<String, Integer>();
-        item = getItem(position);
-
-        Set s = item.entrySet();
-        Collection c = item.values();
-        Iterator itrC = c.iterator(), itrS = s.iterator();
+        Map.Entry<String, String> item = getItem(position);
 
 
         if(item != null){
-            viewHolder.itemView1.setText(String.format("hello %s", itrS.next()));
-            viewHolder.itemView2.setText(String.format("%s", itrC.next()));
+            viewHolder.itemView1.setText(String.format("%s", item.getKey()));
+            viewHolder.itemView2.setText(String.format("%s", item.getValue()));
         }
 
         return convertView;
