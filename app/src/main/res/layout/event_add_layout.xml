@@ -19,15 +19,26 @@
         android:layout_toRightOf="@+id/lblTime"
         android:text="@string/currentTimeText" />
 
-    <EditText
-        android:id="@+id/my_event"
-        android:layout_width="fill_parent"
+    <Spinner
+        android:id="@+id/drug"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/lblTime"
         android:layout_marginTop="100dp"
-        android:text="Event" >
+        android:entries="@array/drugs"
+        android:hint="Event" >
+    </Spinner>
 
+    <EditText
+        android:id="@+id/dose"
+        android:inputType="numberDecimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lblTime"
+        android:layout_marginTop="100dp"
+        android:hint="Dose" >
     </EditText>
 
     <Button

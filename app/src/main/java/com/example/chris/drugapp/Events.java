@@ -4,19 +4,41 @@ package com.example.chris.drugapp;
  * Created by Chris on 01/02/2016.
  */
 
+
+import android.content.Context;
+
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 
 public class Events {
 
-    ArrayList<Event> events = new ArrayList<Event>();
+    ArrayList<Event> eventslist = new ArrayList<Event>();
+    String saveFileName = "calendarEvents.data";
+    Context context;
+
+
+    public Events(Context ctx) {
+        super();
+        context = ctx;
+        //eventslist = readFile(saveFileName,context);
+    }
+
+
 
     // Getting Cursor to read data from table
     public ArrayList<Event> readData(Date event_date) {
         ArrayList<Event> dayEvents = new ArrayList<Event>();
 
-        for (Event entry : events) {
+        for (Event entry : eventslist) {
             Date d = entry.getDate();
 
             if(d.compareTo(event_date) == 0){
@@ -29,24 +51,25 @@ public class Events {
 
     // Getting Cursor to read data from table
     public ArrayList<Event> readAllEvents() {
-        ArrayList<Event> list = new ArrayList<Event>();
-
-        for (Event entry : events) {
-            list.add(entry);
-        }
-        return list;
+        return eventslist;
     }
 
     // Inserting Data into table
-    public int insertData(Date date, String time, String msg) {
-        Event e = new Event(date, time, msg);
+    public int insertData(Date date, String time, String drug, int dose) {
+        Event e = new Event(date, time, drug, dose);
 
         try {
-            events.add(e);
+            eventslist.add(e);
+            e.save(saveFileName, e, context.getApplicationContext());
         } catch (Exception ex){
             ex.printStackTrace();
             return -1;
         }
         return 1;
     }
+
+
+
+
+
 }

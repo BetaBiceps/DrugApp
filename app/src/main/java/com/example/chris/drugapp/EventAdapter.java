@@ -20,6 +20,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         private TextView itemView1;
         private TextView itemView2;
         private TextView itemView3;
+        private TextView itemView4;
     }
     ViewHolder viewHolder;
 
@@ -36,7 +37,8 @@ public class EventAdapter extends ArrayAdapter<Event> {
             viewHolder = new ViewHolder();
             viewHolder.itemView1 = (TextView) convertView.findViewById(R.id.txt_eventDate);
             viewHolder.itemView2 = (TextView) convertView.findViewById(R.id.txt_eventTime);
-            viewHolder.itemView3 = (TextView) convertView.findViewById(R.id.txt_eventName);
+            viewHolder.itemView3 = (TextView) convertView.findViewById(R.id.txt_eventDrug);
+            viewHolder.itemView4 = (TextView) convertView.findViewById(R.id.txt_eventDose);
 
             convertView.setTag(viewHolder);
         } else {
@@ -47,7 +49,8 @@ public class EventAdapter extends ArrayAdapter<Event> {
         if(item != null){
             viewHolder.itemView1.setText(item.dateTostring());
             viewHolder.itemView2.setText(String.format("%s", item.time));
-            viewHolder.itemView3.setText(String.format("%s", item.msg));
+            viewHolder.itemView3.setText(String.format("%s", item.drug));
+            viewHolder.itemView4.setText(String.format("%s", item.dose));
         }
 
         return convertView;

@@ -3,7 +3,9 @@ package com.example.chris.drugapp;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -19,10 +21,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -40,7 +42,8 @@ public class CalendarPage extends FragmentActivity {
     private EventAdapter myadapter = null;
     private ListView listView;
     private TextView output;
-    private EditText event;
+    private EditText dose;
+    private Spinner event;
     private Button btnClick;
     Events events;
 
@@ -48,7 +51,8 @@ public class CalendarPage extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
-        events = new Events();
+        events = new Events(this);
+
 
         date_format = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         time_format = new SimpleDateFormat("hh:mm a", Locale.US);
@@ -65,6 +69,7 @@ public class CalendarPage extends FragmentActivity {
         calendarListener();
         caldroidFragment.refreshView();
     }
+
 
     private void initCalendarView() {
 
@@ -116,7 +121,6 @@ public class CalendarPage extends FragmentActivity {
             public void onCaldroidViewCreated() {
                 if (caldroidFragment.getLeftArrowButton() != null) {
                     cursor = events.readAllEvents();
-                    Date convertedDate = new Date();
                     for (Event e : cursor) {
                         Date date = e.getDate();
                         caldroidFragment.setBackgroundResourceForDate(R.drawable.red_border, date);
@@ -129,7 +133,7 @@ public class CalendarPage extends FragmentActivity {
     }
 
 
-  protected void saveEvent(String date, String time, String msg) {
+  protected void saveEvent(String date, String time, String drug, int dose) {
       // TODO Auto-generated method stub
       Date convertedDate = new Date();
       try {
@@ -138,7 +142,7 @@ public class CalendarPage extends FragmentActivity {
           // TODO Auto-generated catch block
           e.printStackTrace();
       }
-      int rowid = events.insertData(convertedDate,time, msg);
+      int rowid = events.insertData(convertedDate,time, drug, dose);
       if ( rowid == -1)
       {
           caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_white, convertedDate);
@@ -150,6 +154,8 @@ public class CalendarPage extends FragmentActivity {
       caldroidFragment.refreshView();
   }
 
+
+
     protected void openEventDialogue(final Calendar calendar, final Date date) {
 
         // TODO Auto-generated method stub
@@ -158,8 +164,9 @@ public class CalendarPage extends FragmentActivity {
         View dialogView = inflater.inflate(R.layout.event_add_layout, null);
         dialogBuilder.setView(dialogView);
         output = (TextView) dialogView.findViewById(R.id.output);
-        event =(EditText) dialogView.findViewById(R.id.my_event);
+        event =(Spinner) dialogView.findViewById(R.id.drug);
         btnClick = (Button) dialogView.findViewById(R.id.set_button);
+        dose = (EditText) dialogView.findViewById(R.id.dose);
 
         btnClick.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -189,8 +196,10 @@ public class CalendarPage extends FragmentActivity {
             {
                 String date = date_format.format(calendar.getTime());
                 String time = time_format.format(calendar.getTime());
-                String event_ = event.getText().toString();
-                saveEvent(date,time,event_);
+                String event_ = event.getSelectedItem().toString();
+
+                int dose_ = Integer.parseInt(dose.getText().toString());
+                saveEvent(date,time,event_, dose_);
 
             }
         });

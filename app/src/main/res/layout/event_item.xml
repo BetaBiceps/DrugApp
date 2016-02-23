@@ -19,7 +19,7 @@
         android:paddingLeft="@dimen/paddingLeft"
         android:paddingRight="@dimen/paddingRight"
         android:paddingTop="@dimen/paddingTop"
-        android:text="List Item1"
+        android:text="Date"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="italic" />
@@ -33,13 +33,13 @@
         android:paddingLeft="@dimen/paddingLeft"
         android:paddingRight="@dimen/paddingRight"
         android:paddingTop="@dimen/paddingTop"
-        android:text="List Item2"
+        android:text="Time"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/txt_eventName"
+        android:id="@+id/txt_eventDrug"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/caldroid_gray"
@@ -47,9 +47,26 @@
         android:paddingLeft="@dimen/paddingLeft"
         android:paddingRight="@dimen/paddingRight"
         android:paddingTop="@dimen/paddingTop"
-        android:text="List Item 3"
+        android:text="Drug"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/txt_eventDose"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/caldroid_gray"
+        android:paddingBottom="@dimen/paddingBottom"
+        android:paddingLeft="@dimen/paddingLeft"
+        android:paddingRight="@dimen/paddingRight"
+        android:layout_gravity="right"
+        android:paddingTop="@dimen/paddingTop"
+        android:text="Dose"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:gravity="center_horizontal"/>
 
 </LinearLayout>
