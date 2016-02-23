@@ -6,4 +6,14 @@
     <string name="calendarTitle">Calendar</string>
     <string name="overviewTitle">Overview</string>
     <string name="currentTimeText">--:--:--</string>
+
+    <string-array name="drugs">
+        <item>Cocaine</item>
+        <item>MDMA</item>
+        <item>Heroin</item>
+        <item>Ketamine</item>
+        <item>Weed</item>
+        <item>GHB</item>
+        <item>Methamphetamine</item>
+    </string-array>
 </resources>
