@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * This is the main class for the overview page.
+ *
+ * The main function of this page is to display the total
+ * usage of each substance, along with other user info.
+ *
  * Created by Chris on 27/01/2016.
  */
 public class Overview extends Activity {

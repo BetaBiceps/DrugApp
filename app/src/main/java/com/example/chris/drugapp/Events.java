@@ -1,6 +1,9 @@
 package com.example.chris.drugapp;
 
 /**
+ * Events class is responsible for fetching and storing all
+ * user requested events.
+ *
  * Created by Chris on 01/02/2016.
  */
 

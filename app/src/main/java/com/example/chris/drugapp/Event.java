@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * An event is a data set that is used for when the user wants
+ * to save an event in the calendar.
+ *
  * Created by Chris on 01/02/2016.
  */
 public class Event implements Serializable {

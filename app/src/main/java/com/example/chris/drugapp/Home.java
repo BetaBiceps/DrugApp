@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+/**
+ * The home page
+ */
+
 public class Home extends AppCompatActivity {
 
     private Button calendarButton, overviewButton;

@@ -1,6 +1,9 @@
 package com.example.chris.drugapp;
 
 /**
+ * This class controls the row layout of each event on the calendar
+ * page.
+ *
  * Created by Chris on 01/02/2016.
  */
 import android.content.Context;

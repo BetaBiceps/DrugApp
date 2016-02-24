@@ -29,6 +29,11 @@ import android.widget.Toast;
 
 
 /**
+ * This class controls the main functions of the calendar page.
+ *
+ * The calendar is responsible for recording all user entered information,
+ * and displaying it accordingly.
+ *
  * Created by Chris on 27/01/2016.
  */
 public class CalendarPage extends FragmentActivity {

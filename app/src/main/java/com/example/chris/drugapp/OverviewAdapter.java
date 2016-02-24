@@ -11,6 +11,9 @@ import java.util.Map;
 
 
 /**
+ * This adapter is for the overview page, it controls the
+ * custom row layout for each substance on the page.
+ *
  * Created by Chris on 22/02/2016.
  */
 public class OverviewAdapter extends BaseAdapter{
