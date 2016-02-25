@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 /**
  * This class is responsible for determining when to alert users.
@@ -25,8 +28,12 @@ public class NotificationController extends BroadcastReceiver{
      */
     final String alertString = "Usage Alert";
     final String doseIncreaseString = "Dose increases are too common, try decreasing dose.";
-    final float avgIncreaseLimit = 0.1f;
-    final int requiredUseCount = 3;
+    final String freqIncreaseString = "Frequency of use is increasing, try to dose less often.";
+    final float avgIncreaseLimit = 0.1f; // 10% increase
+    final float avgFreqLimit = 0.5f; // 2 times as frequent
+    final int requiredUseCount = 3; // No alerts unless there are enough events
+
+    //TODO add a time frame limit, only look at doses in the past 1 or 2 months
 
     /****/
 
@@ -87,6 +94,9 @@ public class NotificationController extends BroadcastReceiver{
             if (isDoseIncrease(list, drug)) {
                 createNotification(mContext, drug, doseIncreaseString, alertString);
             }
+            if (isFreqIncrease(list, drug)) {
+                createNotification(mContext, drug, freqIncreaseString, alertString);
+            }
         }
     }
 
@@ -124,6 +134,58 @@ public class NotificationController extends BroadcastReceiver{
             double avgDose = totalDose / counter;
             if (avgIncrease > (avgIncreaseLimit * avgDose) && counter >= requiredUseCount) {
                 //If the avg increase is to much and the drug is used past the threshold, return true
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks to see if the frequency of use has been increasing
+     *
+     * If the final 2 uses time distance is less than the frequency limit(based on avg freq)
+     * then it will return true. Assuming the uses limit has been past.
+     *
+     * @param list the list of events
+     * @param drug the drug to check
+     * @return yes or no
+     */
+    private boolean isFreqIncrease(ArrayList<Event> list, String drug){
+        Date lastDate = null;
+        int counter = 0; // number of occurrences of the drug
+        int totalDuration =0;
+
+
+        //Sort the array for date to be in order
+        Collections.sort(list, new Comparator<Event>() {
+            @Override
+            public int compare(Event lhs, Event rhs) {
+                if(lhs.getDate() == null || rhs.getDate() == null)
+                    return 0;
+                return lhs.getDate().compareTo(rhs.getDate());
+            }
+        });
+
+
+        for(Event event : list){
+            if(drug.equals(event.getDrug())) { //check the right drug
+                counter++;
+                if (lastDate != null) {
+                    totalDuration += event.getDate().compareTo(lastDate);
+                }
+                lastDate = event.getDate();
+            }
+        }
+
+        int size = list.size()-1;
+        if (counter > 0 && size > 2) {
+            Date finalDate = list.get(size).getDate();
+            Date secondLastDate = list.get(size-1).getDate();
+            double avgFreq = totalDuration / counter;
+            double lastFreq = finalDate.compareTo(secondLastDate);
+
+            if (lastFreq < (avgFreqLimit * avgFreq) && counter >= requiredUseCount) {
                 return true;
             }
         }
