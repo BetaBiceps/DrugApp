@@ -29,7 +29,6 @@ public class Overview extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview_layout);
         res = getResources();
-        String[] nameArray = res.getStringArray(R.array.drugs);
 
         for(String key : res.getStringArray(R.array.drugs)){
             //Should be populated with totals for value

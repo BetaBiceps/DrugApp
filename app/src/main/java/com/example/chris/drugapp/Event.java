@@ -40,11 +40,15 @@ public class Event implements Serializable {
     }
 
     public String getDrug(){
-        return this.drug;
+        return drug;
     }
     public Date getDate(){
-        return this.date;
+        return date;
     }
+    public int getDose(){
+        return dose;
+    }
+
     public String dateTostring(){
         String x = null;
         try {
@@ -54,6 +58,8 @@ public class Event implements Serializable {
         }
         return x;
     }
+
+
     /**
     * @throws IllegalArgumentException if any field takes an unpermitted value.
             */

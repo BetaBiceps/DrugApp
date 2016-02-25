@@ -3,6 +3,7 @@ package com.example.chris.drugapp;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -39,22 +40,29 @@ import android.widget.Toast;
 public class CalendarPage extends FragmentActivity {
 
     private SimpleDateFormat date_format,time_format;
-    private CaldroidFragment caldroidFragment ;
-    private Bundle args;
-    private ArrayList<Event> cursor;
+    private CaldroidFragment caldroidFragment;
+
+    private ArrayList<Event> eventList;
     private EventAdapter myadapter = null;
+    Events events;
+    NotificationController controller;
+
     private ListView listView;
     private TextView output;
     private EditText dose;
     private Spinner event;
-    private Button btnClick;
-    Events events;
 
+
+    /**
+     * The function called when this activity is opened.
+     * @param savedInstanceState if there is a saved state it is here
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
         events = new Events(this);
+        controller = new NotificationController(CalendarPage.this);
 
 
         date_format = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
@@ -74,17 +82,22 @@ public class CalendarPage extends FragmentActivity {
     }
 
 
+    /**
+     * Creation of the calendar for the user, controls the layout.
+     */
     private void initCalendarView() {
 
-        args = new Bundle();
+        Bundle args = new Bundle();
         //Getting current date
         Calendar cal = Calendar.getInstance();
         Date currentDate = cal.getTime();
+
         //Calendar view optimized
         args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
         args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.SUNDAY);
         args.putBoolean(CaldroidFragment.SHOW_NAVIGATION_ARROWS, true);
+
         caldroidFragment.setArguments(args);
         caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_sky_blue, currentDate);
 
@@ -94,15 +107,19 @@ public class CalendarPage extends FragmentActivity {
     }
 
 
+    /**
+     * Listener for user events on the calendar.
+     * Listens for date selection, long clicks, and refreshing the view.
+     */
     private void calendarListener() {
         // TODO Auto-generated method stub
         final CaldroidListener listener = new CaldroidListener() {
 
             @Override
             public void onSelectDate(Date date, View view) {
-                cursor = events.readData(date);
+                eventList = events.readData(date);
 
-                myadapter = new EventAdapter(CalendarPage.this,0, cursor);
+                myadapter = new EventAdapter(CalendarPage.this,0, eventList);
                 listView.setAdapter(myadapter);
 
                 caldroidFragment.refreshView();
@@ -123,8 +140,8 @@ public class CalendarPage extends FragmentActivity {
             @Override
             public void onCaldroidViewCreated() {
                 if (caldroidFragment.getLeftArrowButton() != null) {
-                    cursor = events.readAllEvents();
-                    for (Event e : cursor) {
+                    eventList = events.readAllEvents();
+                    for (Event e : eventList) {
                         Date date = e.getDate();
                         caldroidFragment.setBackgroundResourceForDate(R.drawable.red_border, date);
                     }
@@ -136,6 +153,13 @@ public class CalendarPage extends FragmentActivity {
     }
 
 
+    /**
+     * Run when the user requests to save a new event.
+     * @param date the date
+     * @param time the time
+     * @param drug the substance from a spinner
+     * @param dose integer dose value
+     */
   protected void saveEvent(String date, String time, String drug, int dose) {
       // TODO Auto-generated method stub
       Date convertedDate = new Date();
@@ -153,12 +177,18 @@ public class CalendarPage extends FragmentActivity {
           return;
 
       }
+      eventList = events.readAllEvents(); // Update the events list
+      controller.notifyCheck(eventList);
       caldroidFragment.setBackgroundResourceForDate(R.drawable.red_border, convertedDate);
       caldroidFragment.refreshView();
   }
 
 
-
+    /**
+     * Run when the user long clicks a date on the calendar
+     * @param calendar the main calendar
+     * @param date the date selected
+     */
     protected void openEventDialogue(final Calendar calendar, final Date date) {
 
         // TODO Auto-generated method stub
@@ -168,7 +198,7 @@ public class CalendarPage extends FragmentActivity {
         dialogBuilder.setView(dialogView);
         output = (TextView) dialogView.findViewById(R.id.output);
         event =(Spinner) dialogView.findViewById(R.id.drug);
-        btnClick = (Button) dialogView.findViewById(R.id.set_button);
+        Button btnClick = (Button) dialogView.findViewById(R.id.set_button);
         dose = (EditText) dialogView.findViewById(R.id.dose);
 
         btnClick.setOnClickListener(new OnClickListener() {
@@ -181,7 +211,7 @@ public class CalendarPage extends FragmentActivity {
                 mTimePicker = new TimePickerDialog(CalendarPage.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        output.setText( selectedHour + ":" + selectedMinute);
+                        output.setText(selectedHour + ":" + selectedMinute);
                         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         calendar.set(Calendar.MINUTE, selectedMinute);
                     }
