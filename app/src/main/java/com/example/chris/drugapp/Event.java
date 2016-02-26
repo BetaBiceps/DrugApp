@@ -3,10 +3,12 @@ package com.example.chris.drugapp;
 import android.content.Context;
 
 import java.io.EOFException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -21,13 +23,12 @@ import java.util.Date;
  * Created by Chris on 01/02/2016.
  */
 public class Event implements Serializable {
-    /**@serial*/
+
+    public static final long serialVersionUID = -29238982928391l;
+
     public String time;
-    /**@serial*/
     public String drug;
-    /**@serial*/
     public Date date;
-    /**@serial*/
     public int dose;
 
     SimpleDateFormat format = new SimpleDateFormat("MM-dd");
@@ -60,19 +61,21 @@ public class Event implements Serializable {
     }
 
 
+
+
     /**
-    * @throws IllegalArgumentException if any field takes an unpermitted value.
-            */
+     * validates all the info for corruction
+     * @throws IllegalArgumentException if any field takes an unpermitted value.
+     */
     private void validateState() {
         validateInt(dose);
-        validateString(time);
-        validateString(drug);
+        //validateString(time);
+        //validateString(drug);
         validateDate(date);
     }
 
     /**
-     * Ensure names contain only letters, spaces, and apostrophes.
-     *
+     * Ensure string contain only letters, spaces, and apostrophes
      * @throws IllegalArgumentException if field takes an unpermitted value.
      */
     private void validateString(String s){
@@ -99,8 +102,9 @@ public class Event implements Serializable {
         }
     }
 
+
     /**
-     * AccountNumber must be non-negative.
+     * Ints must be non-negative.
      * @throws IllegalArgumentException if field takes an unpermitted value.
      */
     private void validateInt(int i){
@@ -121,7 +125,13 @@ public class Event implements Serializable {
     }
 
 
-    protected void readObject(ObjectInputStream objectInputStream)
+    /**
+     * Reads the data from the stream.
+     * @param objectInputStream stream to be read from
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    private void readObject(ObjectInputStream objectInputStream)
     throws ClassNotFoundException, IOException{
         objectInputStream.defaultReadObject();
         date = new Date(date.getTime());
@@ -129,60 +139,16 @@ public class Event implements Serializable {
         validateState();
     }
 
-    protected void writeObject(ObjectOutputStream aOutputStream)
+    /**
+     * Writes data to the stream
+     * @param aOutputStream the stream
+     * @throws IOException
+     */
+    private void writeObject(ObjectOutputStream aOutputStream)
         throws IOException{
         aOutputStream.defaultWriteObject();
     }
 
 
-
-    public void save(String filename, Event theObject,
-                            Context ctx) {
-        FileOutputStream fos;
-        ObjectOutputStream oos;
-
-        try {
-            fos = ctx.openFileOutput(filename, Context.MODE_APPEND);
-            oos = new ObjectOutputStream(fos);
-
-            theObject.writeObject(oos);
-            oos.close();
-            fos.close();
-
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public ArrayList<Event> readFile(String filename, Context ctx) {
-        FileInputStream fis;
-        ObjectInputStream ois;
-        ArrayList<Event> ev = new ArrayList<Event>();
-
-        try {
-            fis = ctx.openFileInput(filename);
-            ois = new ObjectInputStream(fis);
-
-            while(true) {
-                try{
-                    this.readObject(ois);
-                    ev.add(this);
-                } catch (NullPointerException | EOFException e){
-                    e.printStackTrace();
-                    ois.close();
-                    break;
-                }
-            }
-            ois.close();
-            fis.close();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-
-        return ev;
-
-
-
-    }
 
 }
