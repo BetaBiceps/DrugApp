@@ -34,7 +34,7 @@ public class Events{
     public Events(Context ctx) {
         super();
         context = ctx;
-        eventslist = readFile(saveFileName,context);
+       // eventslist = readFile(saveFileName,context);
     }
 
 
@@ -100,7 +100,7 @@ public class Events{
         ObjectOutputStream oos;
 
         try {
-            fos = context.openFileOutput(filename, Context.MODE_PRIVATE);  // maybe private
+            fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
             oos = new ObjectOutputStream(fos);
 
             for(Event e : eventslist){
@@ -118,7 +118,7 @@ public class Events{
      * Reads all events from the file
      * @param filename file
      * @param ctx the context
-     * @return
+     * @return the array of events
      */
     public ArrayList<Event> readFile(String filename, Context ctx) {
         FileInputStream fis;
@@ -150,9 +150,5 @@ public class Events{
 
 
     }
-
-
-
-
 
 }
