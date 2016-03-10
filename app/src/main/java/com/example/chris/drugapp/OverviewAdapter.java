@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -21,14 +22,26 @@ public class OverviewAdapter extends BaseAdapter{
     private static class ViewHolder{
         private TextView itemView1;
         private TextView itemView2;
+        private TextView itemView3;
+        private TextView itemView4;
     }
     ViewHolder viewHolder;
 
     private final ArrayList mData;
+    private final ArrayList mData2;
+    private final ArrayList mData3;
 
-    public OverviewAdapter(Map<String, String> map) {
+    public OverviewAdapter(ArrayList<HashMap<String, String>> list) {
         mData = new ArrayList();
-        mData.addAll(map.entrySet());
+        mData2 = new ArrayList();
+        mData3 = new ArrayList();
+        try {
+            mData.addAll(list.get(0).entrySet());
+            mData2.addAll(list.get(1).entrySet());
+            mData3.addAll(list.get(2).entrySet());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -39,6 +52,12 @@ public class OverviewAdapter extends BaseAdapter{
     @Override
     public Map.Entry<String, String> getItem(int position) {
         return (Map.Entry) mData.get(position);
+    }
+    public Map.Entry<String, String> getItem2(int position) {
+        return (Map.Entry) mData2.get(position);
+    }
+    public Map.Entry<String, String> getItem3(int position) {
+        return (Map.Entry) mData3.get(position);
     }
 
     @Override
@@ -57,6 +76,8 @@ public class OverviewAdapter extends BaseAdapter{
             viewHolder = new ViewHolder();
             viewHolder.itemView1 = (TextView) convertView.findViewById(R.id.drugName);
             viewHolder.itemView2 = (TextView) convertView.findViewById(R.id.drugTotal);
+            viewHolder.itemView3 = (TextView) convertView.findViewById(R.id.drugTotal2);
+            viewHolder.itemView4 = (TextView) convertView.findViewById(R.id.drugTotal3);
 
             convertView.setTag(viewHolder);
         } else {
@@ -64,11 +85,19 @@ public class OverviewAdapter extends BaseAdapter{
         }
 
         Map.Entry<String, String> item = getItem(position);
+        Map.Entry<String, String> item2 = getItem2(position);
+        Map.Entry<String, String> item3 = getItem3(position);
 
 
         if(item != null){
             viewHolder.itemView1.setText(String.format("%s", item.getKey()));
             viewHolder.itemView2.setText(String.format("%s", item.getValue()));
+        }
+        if(item2 != null){
+            viewHolder.itemView3.setText(String.format("%s", item2.getValue()));
+        }
+        if(item3 != null){
+            viewHolder.itemView4.setText(String.format("%s", item3.getValue()));
         }
 
         return convertView;

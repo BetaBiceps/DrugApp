@@ -8,7 +8,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center_horizontal">
 
 
     <TextView
@@ -17,13 +18,13 @@
         android:layout_height="wrap_content"
         android:background="@color/caldroid_gray"
         android:paddingBottom="@dimen/paddingBottom"
-        android:paddingLeft="@dimen/paddingLeft"
         android:paddingRight="@dimen/paddingRight"
         android:paddingTop="@dimen/paddingTop"
         android:text="Drug"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:gravity="left"/>
 
     <TextView
         android:id="@+id/drugTotal"
@@ -31,12 +32,41 @@
         android:layout_height="wrap_content"
         android:background="@color/caldroid_gray"
         android:paddingBottom="@dimen/paddingBottom"
-        android:paddingLeft="@dimen/paddingLeft"
-        android:paddingRight="@dimen/paddingRight"
+        android:paddingLeft="40dp"
+        android:paddingRight="12dp"
         android:paddingTop="@dimen/paddingTop"
         android:text="Total"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
+        android:textStyle="italic" />
+    <TextView
+        android:id="@+id/drugTotal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/caldroid_gray"
+        android:paddingBottom="@dimen/paddingBottom"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="@dimen/paddingTop"
+        android:text="Total"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
+        android:textStyle="italic" />
+    <TextView
+        android:id="@+id/drugTotal3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/caldroid_gray"
+        android:paddingBottom="@dimen/paddingBottom"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="@dimen/paddingTop"
+        android:text="Total"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
         android:textStyle="italic" />
 
 
