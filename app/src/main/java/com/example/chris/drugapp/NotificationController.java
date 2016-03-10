@@ -23,6 +23,10 @@ public class NotificationController extends BroadcastReceiver{
     Context mContext;
     String[] drugArray;
 
+    // These are used to control the frequency of notifying.
+    int doseIncraseSpamCount = 0;
+    int freqIncraseSpamCount = 0;
+
     /**
      * DEFINED VALUES
      */
@@ -32,8 +36,10 @@ public class NotificationController extends BroadcastReceiver{
     final float avgIncreaseLimit = 0.1f; // 10% increase
     final float avgFreqLimit = 0.5f; // 2 times as frequent
     final int requiredUseCount = 3; // No alerts unless there are enough events
+    final int spamCountRequired = 3;
 
     //TODO add a time frame limit, only look at doses in the past 1 or 2 months
+
 
     /****/
 
@@ -132,7 +138,9 @@ public class NotificationController extends BroadcastReceiver{
         if (counter > 0) {
             double avgIncrease = totalIncrease / counter;
             double avgDose = totalDose / counter;
-            if (avgIncrease > (avgIncreaseLimit * avgDose) && counter >= requiredUseCount) {
+            if (avgIncrease > (avgIncreaseLimit * avgDose) &&
+                    counter >= (requiredUseCount+doseIncraseSpamCount)) {
+                doseIncraseSpamCount += spamCountRequired;
                 //If the avg increase is to much and the drug is used past the threshold, return true
                 return true;
             }
@@ -185,7 +193,9 @@ public class NotificationController extends BroadcastReceiver{
             double avgFreq = totalDuration / counter;
             double lastFreq = finalDate.compareTo(secondLastDate);
 
-            if (lastFreq < (avgFreqLimit * avgFreq) && counter >= requiredUseCount) {
+            if (lastFreq < (avgFreqLimit * avgFreq) &&
+                    counter >= (requiredUseCount+freqIncraseSpamCount)) {
+                freqIncraseSpamCount += spamCountRequired;
                 return true;
             }
         }

@@ -115,6 +115,15 @@ public class Events{
     }
 
     /**
+     * Deleted the selected event.
+     * @param event the event to delete
+     */
+    public void deleteEvent(Event event){
+        eventslist.remove(event);
+        save(saveFileName);
+    }
+
+    /**
      * Reads all events from the file
      * @param filename file
      * @param ctx the context

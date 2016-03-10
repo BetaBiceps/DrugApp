@@ -20,6 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -75,6 +76,14 @@ public class CalendarPage extends FragmentActivity {
         LayoutInflater inflater = getLayoutInflater();
         View header = inflater.inflate(R.layout.event_header, listView, false);
         listView.addHeaderView(header, null, false);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Event eventSelected = (Event) listView.getItemAtPosition(position);
+                openDeleteDialogue(eventSelected);
+            }
+        });
 
         initCalendarView();
         calendarListener();
@@ -191,7 +200,6 @@ public class CalendarPage extends FragmentActivity {
      */
     protected void openEventDialogue(final Calendar calendar, final Date date) {
 
-        // TODO Auto-generated method stub
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.event_add_layout, null);
@@ -222,29 +230,60 @@ public class CalendarPage extends FragmentActivity {
             }
         });
 
-        dialogBuilder.setPositiveButton("Event", new DialogInterface.OnClickListener()
-        {
+        dialogBuilder.setPositiveButton("Event", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 String date = date_format.format(calendar.getTime());
                 String time = time_format.format(calendar.getTime());
                 String event_ = event.getSelectedItem().toString();
 
                 int dose_ = Integer.parseInt(dose.getText().toString());
-                saveEvent(date,time,event_, dose_);
+                saveEvent(date, time, event_, dose_);
 
             }
         });
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-        {
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_white, date);
                 caldroidFragment.refreshView();
             }
         });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
+    }
+
+
+
+    /**
+     * Run when the user clicks on an event
+     * @param event the event
+     */
+    protected void openDeleteDialogue(final Event event) {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle("Delete");
+        dialogBuilder.setMessage("Are you sure you want to delete this event?");
+
+
+        dialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                events.deleteEvent(event);
+
+                Toast.makeText(CalendarPage.this, "Deleted Event.", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                caldroidFragment.refreshView();
+            }
+        });
+
 
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
