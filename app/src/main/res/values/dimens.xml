@@ -7,4 +7,6 @@
     <dimen name="paddingLeft">2dp</dimen>
     <dimen name="paddingTop">8dp</dimen>
     <dimen name="paddingBottom">8dp</dimen>
+    <dimen name="paddingLeftRightOverview">12dp</dimen>
+    <dimen name="paddingLeftRightOverviewHeader">10dp</dimen>
 </resources>
