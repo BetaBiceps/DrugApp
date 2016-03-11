@@ -38,7 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/lblTime"
         android:layout_marginTop="100dp"
-        android:hint="Dose" >
+        android:hint="Dose(mg)" >
     </EditText>
 
     <Button
