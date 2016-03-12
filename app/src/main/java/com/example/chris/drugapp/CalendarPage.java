@@ -66,8 +66,8 @@ public class CalendarPage extends FragmentActivity {
         controller = new NotificationController(CalendarPage.this);
 
 
-        date_format = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
-        time_format = new SimpleDateFormat("hh:mm a", Locale.US);
+        date_format = new SimpleDateFormat("MM-dd", Locale.US);
+        time_format = new SimpleDateFormat("hh:mm", Locale.US);
         caldroidFragment = new CaldroidFragment();
 
 

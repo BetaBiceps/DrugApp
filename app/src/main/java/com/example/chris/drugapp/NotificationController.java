@@ -54,7 +54,7 @@ public class NotificationController extends BroadcastReceiver{
     public NotificationController(Context context) {
         mContext = context;
         drugArray = mContext.getResources().getStringArray(R.array.drugs);
-        doseLimit.put("Methamphetamine", 50);
+        doseLimit.put("Meth", 50);
         doseLimit.put("Ketamine",100);
         doseLimit.put("GHB",2000);
         doseLimit.put("Cocaine",500);
@@ -62,7 +62,7 @@ public class NotificationController extends BroadcastReceiver{
         doseLimit.put("Marijuana",3000);
         doseLimit.put("MDMA",300);
 
-        freqLimit.put("Methamphetamine", 7);
+        freqLimit.put("Meth", 7);
         freqLimit.put("Ketamine",3);
         freqLimit.put("GHB",3);
         freqLimit.put("Cocaine",7);

@@ -8,7 +8,7 @@
     <string name="currentTimeText">--:--:--</string>
 
     <string-array name="drugs">
-        <item>Methamphetamine</item>
+        <item>Meth</item>
         <item>GHB</item>
         <item>MDMA</item>
         <item>Cocaine</item>
