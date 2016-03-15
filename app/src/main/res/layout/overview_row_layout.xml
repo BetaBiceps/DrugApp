@@ -23,7 +23,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right">
+        android:layout_gravity="center">
         <TextView
             android:id="@+id/drugTotal"
             android:layout_width="wrap_content"
