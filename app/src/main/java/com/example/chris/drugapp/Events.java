@@ -34,7 +34,7 @@ public class Events{
     public Events(Context ctx) {
         super();
         context = ctx;
-       // eventslist = readFile(saveFileName,context);
+       eventslist = readFile(saveFileName,context);
     }
 
 

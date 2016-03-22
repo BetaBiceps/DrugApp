@@ -66,8 +66,8 @@ public class CalendarPage extends FragmentActivity {
         controller = new NotificationController(CalendarPage.this);
 
 
-        date_format = new SimpleDateFormat("MM-dd", Locale.US);
-        time_format = new SimpleDateFormat("hh:mm", Locale.US);
+        date_format = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
+        time_format = new SimpleDateFormat("hh:mm a", Locale.US);
         caldroidFragment = new CaldroidFragment();
 
 
@@ -170,12 +170,10 @@ public class CalendarPage extends FragmentActivity {
      * @param dose integer dose value
      */
   protected void saveEvent(String date, String time, String drug, int dose) {
-      // TODO Auto-generated method stub
       Date convertedDate = new Date();
       try {
           convertedDate = date_format.parse(date);
       } catch (ParseException e) {
-          // TODO Auto-generated catch block
           e.printStackTrace();
       }
       int rowid = events.insertData(convertedDate,time, drug, dose);
@@ -187,7 +185,7 @@ public class CalendarPage extends FragmentActivity {
 
       }
       eventList = events.readAllEvents(); // Update the events list
-      controller.notifyCheck(eventList, drug, dose);
+      //controller.notifyCheck(eventList, drug, dose);
       caldroidFragment.setBackgroundResourceForDate(R.drawable.red_border, convertedDate);
       caldroidFragment.refreshView();
   }
