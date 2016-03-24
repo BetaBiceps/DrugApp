@@ -10,12 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.chris.drugapp.Home"
-    tools:showIn="@layout/activity_home">
+    tools:showIn="@layout/activity_home"
+    android:background="@color/black">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
+        android:textSize="0dp"
         android:layout_centerHorizontal="true"
         android:text="@string/app_name"
         android:id="@+id/textView" />
@@ -38,4 +45,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:onClick="overviewClick"/>
+
+
 </RelativeLayout>
