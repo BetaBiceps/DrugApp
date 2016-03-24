@@ -38,8 +38,10 @@ public class Overview extends Activity {
     Calendar cal = Calendar.getInstance();
     Date date= new Date();
 
-    String[] Months = {"Jan", "Feb", "Mar", "Apr", "May", "June",
+    final String[] Months = {"Jan", "Feb", "Mar", "Apr", "May", "June",
             "July", "Aug", "Sept", "Nov", "Dec"};
+    final String[] stringsOfDrugs = {"Meth", "GHB", "Marijuana", "Cocaine",
+            "MDMA", "Heroin", "Ketamine"};
 
     OverviewAdapter listAdapter;
     ListView listView;
@@ -70,8 +72,10 @@ public class Overview extends Activity {
         TextView month2 = (TextView) header.findViewById(R.id.month2);
         TextView month3 = (TextView) header.findViewById(R.id.month3);
 
-        month1.setText(Months[cal.get(Calendar.MONTH)-2]);
-        month2.setText(Months[cal.get(Calendar.MONTH)-1]);
+        //TODO Fix this to be the correct months without array out of bounds exception
+        cal.setTime(date);
+        month1.setText(Months[cal.get(Calendar.MONTH) -2]);
+        month2.setText(Months[cal.get(Calendar.MONTH) -1]);
         month3.setText(Months[cal.get(Calendar.MONTH)]);
 
 
@@ -86,14 +90,16 @@ public class Overview extends Activity {
         fillPage();
     }
 
+    /**
+     * Fills the page with data/graphs
+     */
     protected  void fillPage(){
-        final String[] stringsOfDrugs = getResources().getStringArray(R.array.drugs);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String drugPicked = stringsOfDrugs[position];
+                String drugPicked = stringsOfDrugs[position-1];
 
+                cal.setTime(date);
                 int val1 = getTotal(drugPicked, cal.get(Calendar.MONTH));
                 int val2 = getTotal(drugPicked, cal.get(Calendar.MONTH) - 1);
                 int val3 = getTotal(drugPicked, cal.get(Calendar.MONTH) - 2);
@@ -189,7 +195,7 @@ public class Overview extends Activity {
     }
 
     /**
-     * returns the data points for the past 3 months for a line grpah
+     * returns the data points for the past 3 months for a line graph
      * @param drug the drug to find
      * @param month month to lookat
      * @return data the datapoints
