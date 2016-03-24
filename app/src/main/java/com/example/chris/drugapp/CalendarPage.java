@@ -185,7 +185,7 @@ public class CalendarPage extends FragmentActivity {
 
       }
       eventList = events.readAllEvents(); // Update the events list
-      //controller.notifyCheck(eventList, drug, dose);
+      controller.notifyCheck(eventList, drug, dose);
       caldroidFragment.setBackgroundResourceForDate(R.drawable.red_border, convertedDate);
       caldroidFragment.refreshView();
   }

@@ -35,7 +35,7 @@ public class NotificationController extends BroadcastReceiver{
     final String freqIncreaseString = "Frequency of use is increasing, \ntry to dose less often.";
     final String doseHighString = "Dose is high. Use caution.";
     final String freqHighString = "Dosing again too soon. Use caution.";
-    float avgIncreaseLimit = 0.15f; // 15% increase
+    float avgIncreaseLimit = 0.25f; // 25% increase
     float avgFreqLimit = 0.5f; // 2 times as frequent
     int requiredUseCount = 3; // No alerts unless there are enough events
     final int spamCountRequired = 3; // Controls repeating messages
@@ -140,14 +140,14 @@ public class NotificationController extends BroadcastReceiver{
     public void notifyCheck(ArrayList<Event> list, String drugAdded, int dose){
         checkMarks(list);
 
-        for (String drug : drugArray) {
-            if (isDoseIncrease(list, drug)) {
-                createNotification(mContext, drug, doseIncreaseString, alertString);
-            }
-            if (isFreqIncrease(list, drug)) {
-                createNotification(mContext, drug, freqIncreaseString, alertString);
-            }
+
+        if (isDoseIncrease(list, drugAdded)) {
+            createNotification(mContext, drugAdded, doseIncreaseString, alertString);
         }
+        if (isFreqIncrease(list, drugAdded)) {
+            createNotification(mContext, drugAdded, freqIncreaseString, alertString);
+        }
+
 
         if(isDoseHigh(drugAdded, dose)){
             createNotification(mContext, drugAdded, doseHighString, alertString);
