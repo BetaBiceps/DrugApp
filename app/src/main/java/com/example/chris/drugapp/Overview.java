@@ -101,8 +101,8 @@ public class Overview extends Activity {
 
                 cal.setTime(date);
                 int val1 = getTotal(drugPicked, cal.get(Calendar.MONTH));
-                int val2 = getTotal(drugPicked, cal.get(Calendar.MONTH) - 1);
-                int val3 = getTotal(drugPicked, cal.get(Calendar.MONTH) - 2);
+                int val2 = getTotal(drugPicked, cal.get(Calendar.MONTH) + 1);
+                int val3 = getTotal(drugPicked, cal.get(Calendar.MONTH) + 2);
 
                 graphView.removeAllSeries();
 

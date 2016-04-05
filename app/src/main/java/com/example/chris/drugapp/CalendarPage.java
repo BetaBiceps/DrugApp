@@ -243,7 +243,7 @@ public class CalendarPage extends FragmentActivity {
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_white, date);
+                //caldroidFragment.setBackgroundResourceForDate(R.color.caldroid_white, date);
                 caldroidFragment.refreshView();
             }
         });
@@ -272,6 +272,7 @@ public class CalendarPage extends FragmentActivity {
                 events.deleteEvent(event);
 
                 Toast.makeText(CalendarPage.this, "Deleted Event.", Toast.LENGTH_SHORT).show();
+                caldroidFragment.refreshView();
 
             }
         });
