@@ -62,6 +62,7 @@ public class NotificationController extends BroadcastReceiver{
         setDefault();
     }
 
+
     private void setDefault(){
         doseLimit.clear();
         doseLimit.put("Meth", 50);
@@ -167,7 +168,7 @@ public class NotificationController extends BroadcastReceiver{
      * @param drug the drug to check
      * @return yes or no
      */
-    private boolean isDoseIncrease(ArrayList<Event> list, String drug){
+    public boolean isDoseIncrease(ArrayList<Event> list, String drug){
         int lastBiggest = 0;
         int counter = 0; // number of occurences of the drug
         int totalIncrease = 0;
@@ -213,7 +214,7 @@ public class NotificationController extends BroadcastReceiver{
      * @param drug the drug to check
      * @return yes or no
      */
-    private boolean isFreqIncrease(ArrayList<Event> list, String drug){
+    public boolean isFreqIncrease(ArrayList<Event> list, String drug){
         Date lastDate = null;
         int counter = 0; // number of occurrences of the drug
         int totalDuration =0;
@@ -266,7 +267,7 @@ public class NotificationController extends BroadcastReceiver{
      * @param dose the dose being checked
      * @return true if higher than limit
      */
-    private boolean isDoseHigh(String drug, int dose){
+    public boolean isDoseHigh(String drug, int dose){
         if(dose >= doseLimit.get(drug)){
             isMarked.remove(drug);
             isMarked.put(drug, true);
@@ -281,7 +282,7 @@ public class NotificationController extends BroadcastReceiver{
      * @param drug the drug being added
      * @return true if freq too high
      */
-    private boolean isFreqHigh(ArrayList<Event> list, String drug){
+    public boolean isFreqHigh(ArrayList<Event> list, String drug){
         //Sort the array for date to be in order
         Collections.sort(list, new Comparator<Event>() {
             @Override

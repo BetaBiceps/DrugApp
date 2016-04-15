@@ -1,5 +1,7 @@
 package com.example.chris.drugapp;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +28,7 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
 
         final TextView titleTextView = (TextView) findViewById(R.id.textView);
         //Calendar Button
@@ -71,4 +74,7 @@ public class Home extends AppCompatActivity {
 
         startActivity(overviewIntent);
     }
+
+
 }
+
